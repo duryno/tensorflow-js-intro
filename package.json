@@ -16,9 +16,8 @@
   },
   "dependencies": {
     "@tensorflow-models/knn-classifier": "^1.2.2",
-    "@tensorflow-models/mobilenet": "^2.0.4",
+    "@tensorflow-models/mobilenet": "^1.0.0",
     "@tensorflow/tfjs": "^2.0.0",
-    "lodash": "^4.17.15",
-    "typescript": "^3.9.3"
+    "lodash": "^4.17.15"
   }
 }

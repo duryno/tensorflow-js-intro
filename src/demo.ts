@@ -37,11 +37,16 @@ export class Demo {
     }
 
     async evaluate() {
+        let correctPredictionsCounter = 0
         for (const data of this.validationData) {
             const i = this.model.infer(data.image)
             const predictions = await this.classifier.predictClass(i)
+            if (data.label === predictions.label) correctPredictionsCounter++
             console.log('[prediction] label:', data.label, predictions)
         }
+
+        const accuracy = correctPredictionsCounter / this.validationData.length
+        console.log('[accuracy]', accuracy)
     }
 
     async getTrainingData(): Promise<any[]> {
@@ -58,19 +63,30 @@ export class Demo {
         const json = await fetch(`${path}.json`)
         const files = await json.json()
 
-        for (let dir of Object.keys(files)) {
-            for (let img of files[dir]) {
-                const imgElem = new Image()
-                imgElem.width = this.IMAGE_SIZE
-                imgElem.height = this.IMAGE_SIZE
-                imgElem.src = `${path}/${dir}/${img}`
+        return new Promise(async resolve => {
+            for (let dir of Object.keys(files)) {
+                for (let img of files[dir]) {
+                    const imgElem = new Image()
+                    imgElem.width = this.IMAGE_SIZE
+                    imgElem.height = this.IMAGE_SIZE
+                    imgElem.src = `${path}/${dir}/${img}`
+                    document.body.append(imgElem)
 
-                document.body.append(imgElem)
-                data.push({image: img, label: dir})
+                    await this.delay(15)
+    
+                    data.push({image: imgElem, label: dir})
+                }
             }
-        }
-
-        return data
+            resolve(data)
+        })
     }
+
+    async delay(delayInms: number): Promise<void> {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve();
+          }, delayInms);
+        });
+      }
 
 }
