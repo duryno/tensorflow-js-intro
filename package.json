@@ -12,7 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.12"
   },
   "dependencies": {
     "@tensorflow-models/knn-classifier": "^1.2.2",
